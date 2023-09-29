@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.title});
-  final String title;
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -45,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text('Intrusion Detection System'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -113,8 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(
                         height: 10,
-                        child:
-                            _isLoading ? LinearProgressIndicator() : SizedBox(),
+                        child: _isLoading
+                            ? const LinearProgressIndicator()
+                            : const SizedBox(),
                       )
                     ],
                   ),

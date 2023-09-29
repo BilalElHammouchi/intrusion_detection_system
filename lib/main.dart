@@ -15,8 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Intrusion Detection System',
       initialRoute: '/login',
       routes: {
-        '/login': (context) =>
-            const LoginPage(title: 'Intrusion Detection System'),
+        '/login': (context) => const LoginPage(),
         '/index': (context) => const HomePage(),
       },
       theme: ThemeData(
