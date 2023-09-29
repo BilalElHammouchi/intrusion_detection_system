@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intrusion_detection_system/home_page.dart';
 import 'package:intrusion_detection_system/login_page.dart';
+import 'package:intrusion_detection_system/myscaffold.dart';
+import 'package:intrusion_detection_system/requests_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginPage(),
-        '/index': (context) => const HomePage(),
+        '/index': (context) => const MyScaffold(),
+        '/requests': (context) => const RequestsPage()
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
