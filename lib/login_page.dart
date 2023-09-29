@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _isLoading = false;
 
   Future<bool> signIn() async {
     final url = Uri.parse('https://goldendovah.pythonanywhere.com/login');
@@ -87,12 +88,16 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 20.0),
                       ElevatedButton(
                         onPressed: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
                           if (await signIn()) {
                             ElegantNotification.success(
                               title: const Text("Success"),
                               description:
                                   Text("Welcome ${usernameController.text}"),
                             ).show(context);
+                            Navigator.pushNamed(context, '/index');
                           } else {
                             ElegantNotification.error(
                               title: const Text("Error"),
@@ -100,9 +105,17 @@ class _LoginPageState extends State<LoginPage> {
                                   "No administrator found with these credentials."),
                             ).show(context);
                           }
+                          setState(() {
+                            _isLoading = false;
+                          });
                         },
                         child: const Text('Sign In'),
                       ),
+                      SizedBox(
+                        height: 10,
+                        child:
+                            _isLoading ? LinearProgressIndicator() : SizedBox(),
+                      )
                     ],
                   ),
                 ),

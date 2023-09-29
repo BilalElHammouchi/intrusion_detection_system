@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intrusion_detection_system/home_page.dart';
 import 'package:intrusion_detection_system/login_page.dart';
 
 void main() {
@@ -12,11 +13,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Intrusion Detection System',
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) =>
+            const LoginPage(title: 'Intrusion Detection System'),
+        '/index': (context) => const HomePage(),
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(title: 'Intrusion Detection System'),
     );
   }
 }
