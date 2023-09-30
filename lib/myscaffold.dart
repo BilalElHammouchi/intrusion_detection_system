@@ -25,7 +25,7 @@ class _MyScaffoldState extends State<MyScaffold> {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
-        print(data['message']);
+        print(data);
       });
     } else {
       throw Exception('Failed to load data');
