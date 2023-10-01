@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intrusion_detection_system/login_page.dart';
 
 class HomePage extends StatefulWidget {
-  final String text;
-  const HomePage({super.key, required this.text});
+  final List<TextSpan> textSpan;
+  const HomePage({super.key, required this.textSpan});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -80,12 +80,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.text,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                  ),
+                child: RichText(
+                  text: TextSpan(
+                      children: widget.textSpan,
+                      style: TextStyle(fontSize: 16)),
                 ),
               ),
             ),

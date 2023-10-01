@@ -15,15 +15,30 @@ class MyScaffold extends StatefulWidget {
 }
 
 class _MyScaffoldState extends State<MyScaffold> {
-  String dynamicText = '';
+  List<TextSpan> dynamicText = [];
 
   int _currentIndex = 0;
   late int delaySeconds, delayMilliseconds;
   late Random random;
 
   void addText(String s) {
+    print(dynamicText);
     setState(() {
-      dynamicText += 'A $s Request was received\n';
+      dynamicText = [
+        ...dynamicText,
+        const TextSpan(
+          text: 'A ',
+          style: TextStyle(color: Colors.black),
+        ),
+        TextSpan(
+          text: s,
+          style: TextStyle(color: s == 'Benign' ? Colors.green : Colors.red),
+        ),
+        const TextSpan(
+          text: ' request was received.\n',
+          style: TextStyle(color: Colors.black),
+        ),
+      ];
     });
   }
 
@@ -71,7 +86,9 @@ class _MyScaffoldState extends State<MyScaffold> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Intrusion Detection System'),
       ),
-      body: _currentIndex == 0 ? HomePage(text: dynamicText) : RequestsPage(),
+      body: _currentIndex == 0
+          ? HomePage(textSpan: dynamicText)
+          : const RequestsPage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {

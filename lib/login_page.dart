@@ -47,6 +47,28 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void attemptSignIn(String s) async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (await signIn()) {
+      ElegantNotification.success(
+        title: const Text("Success"),
+        description: Text("Welcome ${usernameController.text}"),
+      ).show(context);
+      Navigator.pushNamed(context, '/index');
+    } else {
+      ElegantNotification.error(
+        title: const Text("Error"),
+        description:
+            const Text("No administrator found with these credentials."),
+      ).show(context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 10.0),
                           TextField(
                             controller: passwordController,
+                            onSubmitted: attemptSignIn,
                             decoration: const InputDecoration(
                               hintText: 'Password',
                               icon: Icon(Icons.lock),
@@ -97,26 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 20.0),
                           ElevatedButton(
                             onPressed: () async {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              if (await signIn()) {
-                                ElegantNotification.success(
-                                  title: const Text("Success"),
-                                  description: Text(
-                                      "Welcome ${usernameController.text}"),
-                                ).show(context);
-                                Navigator.pushNamed(context, '/index');
-                              } else {
-                                ElegantNotification.error(
-                                  title: const Text("Error"),
-                                  description: const Text(
-                                      "No administrator found with these credentials."),
-                                ).show(context);
-                              }
-                              setState(() {
-                                _isLoading = false;
-                              });
+                              attemptSignIn('');
                             },
                             child: const Text('Sign In'),
                           ),
