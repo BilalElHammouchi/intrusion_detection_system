@@ -30,10 +30,12 @@ class _RequestsPageState extends State<RequestsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SingleChildScrollView(
-              reverse: true,
-              child: RichText(
-                text: TextSpan(children: widget.textSpan),
+            Expanded(
+              child: SingleChildScrollView(
+                reverse: true,
+                child: RichText(
+                  text: TextSpan(children: widget.textSpan),
+                ),
               ),
             ),
           ],
