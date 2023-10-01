@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intrusion_detection_system/login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,19 +30,19 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             padding: const EdgeInsets.all(16.0),
-            child: const Column(
+            child: Column(
               children: [
-                Text(
+                const Text(
                   'Number of Requests',
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
-                  '42',
-                  style: TextStyle(
+                  '${User.nbrRequests}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 32.0,
                   ),
@@ -53,9 +54,12 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildRequestTypeContainer('BENIGN', Icons.security, '10'),
-              buildRequestTypeContainer('DDoS', Icons.warning, '15'),
-              buildRequestTypeContainer('PortScan', Icons.error, '17'),
+              buildRequestTypeContainer(
+                  'BENIGN', Icons.security, '${User.nbrBenign}'),
+              buildRequestTypeContainer(
+                  'DDoS', Icons.warning, '${User.nbrDDoS}'),
+              buildRequestTypeContainer(
+                  'PortScan', Icons.error, '${User.nbrPortScan}'),
             ],
           ),
           Expanded(

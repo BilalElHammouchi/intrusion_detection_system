@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +31,12 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.statusCode == 200) {
+        User.username = usernameController.text;
+        final data = json.decode(response.body);
+        User.nbrRequests = data['nbr_requests'];
+        User.nbrBenign = data['nbr_benign'];
+        User.nbrDDoS = data['nbr_ddos'];
+        User.nbrPortScan = data['nbr_portscan'];
         return true;
       } else {
         return false;
@@ -44,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Intrusion Detection System'),
+        title: const Text('Intrusion Detection System'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -52,72 +60,73 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Center(
               child: IntrinsicHeight(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: usernameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Username',
-                          icon: Icon(Icons.person),
-                        ),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: usernameController,
+                            decoration: const InputDecoration(
+                              hintText: 'Username',
+                              icon: Icon(Icons.person),
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
+                          TextField(
+                            controller: passwordController,
+                            decoration: const InputDecoration(
+                              hintText: 'Password',
+                              icon: Icon(Icons.lock),
+                            ),
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 20.0),
+                          ElevatedButton(
+                            onPressed: () async {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              if (await signIn()) {
+                                ElegantNotification.success(
+                                  title: const Text("Success"),
+                                  description: Text(
+                                      "Welcome ${usernameController.text}"),
+                                ).show(context);
+                                Navigator.pushNamed(context, '/index');
+                              } else {
+                                ElegantNotification.error(
+                                  title: const Text("Error"),
+                                  description: const Text(
+                                      "No administrator found with these credentials."),
+                                ).show(context);
+                              }
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            },
+                            child: const Text('Sign In'),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10.0),
-                      TextField(
-                        controller: passwordController,
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                          icon: Icon(Icons.lock),
-                        ),
-                        obscureText: true,
-                      ),
-                      const SizedBox(height: 20.0),
-                      ElevatedButton(
-                        onPressed: () async {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          if (await signIn()) {
-                            ElegantNotification.success(
-                              title: const Text("Success"),
-                              description:
-                                  Text("Welcome ${usernameController.text}"),
-                            ).show(context);
-                            Navigator.pushNamed(context, '/index');
-                          } else {
-                            ElegantNotification.error(
-                              title: const Text("Error"),
-                              description: const Text(
-                                  "No administrator found with these credentials."),
-                            ).show(context);
-                          }
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        },
-                        child: const Text('Sign In'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                        child: _isLoading
-                            ? const LinearProgressIndicator()
-                            : const SizedBox(),
-                      )
-                    ],
-                  ),
+                    ),
+                    _isLoading
+                        ? const LinearProgressIndicator()
+                        : const SizedBox()
+                  ],
                 ),
               ),
             ),
@@ -133,4 +142,12 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+class User {
+  static late String username;
+  static late int nbrRequests;
+  static late int nbrBenign;
+  static late int nbrDDoS;
+  static late int nbrPortScan;
 }

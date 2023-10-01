@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intrusion_detection_system/home_page.dart';
+import 'package:intrusion_detection_system/login_page.dart';
 import 'package:intrusion_detection_system/requests_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,7 +16,6 @@ class MyScaffold extends StatefulWidget {
 
 class _MyScaffoldState extends State<MyScaffold> {
   int _currentIndex = 0;
-  final List<Widget> _pages = [const HomePage(), const RequestsPage()];
   late int delaySeconds, delayMilliseconds;
   late Random random;
 
@@ -25,7 +25,11 @@ class _MyScaffoldState extends State<MyScaffold> {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
-        print(data);
+        User.nbrRequests = data['nbr_requests'];
+        User.nbrBenign = data['nbr_benign'];
+        User.nbrDDoS = data['nbr_ddos'];
+        User.nbrPortScan = data['nbr_portscan'];
+        //print(data);
       });
     } else {
       throw Exception('Failed to load data');
@@ -51,7 +55,7 @@ class _MyScaffoldState extends State<MyScaffold> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Intrusion Detection System'),
       ),
-      body: _pages[_currentIndex],
+      body: _currentIndex == 0 ? HomePage() : RequestsPage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
