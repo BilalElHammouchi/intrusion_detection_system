@@ -80,10 +80,13 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 padding: const EdgeInsets.all(16.0),
-                child: RichText(
-                  text: TextSpan(
-                      children: widget.textSpan,
-                      style: TextStyle(fontSize: 16)),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: RichText(
+                    text: TextSpan(
+                        children: widget.textSpan,
+                        style: TextStyle(fontSize: 16)),
+                  ),
                 ),
               ),
             ),

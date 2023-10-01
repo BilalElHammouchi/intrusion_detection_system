@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RequestsPage extends StatefulWidget {
-  const RequestsPage({super.key});
+  final List<TextSpan> textSpan;
+  const RequestsPage({super.key, required this.textSpan});
 
   @override
   State<RequestsPage> createState() => _RequestsPageState();
@@ -26,14 +27,13 @@ class _RequestsPageState extends State<RequestsPage> {
           ],
         ),
         padding: const EdgeInsets.all(16.0),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'HELLO',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12.0,
+            SingleChildScrollView(
+              reverse: true,
+              child: RichText(
+                text: TextSpan(children: widget.textSpan),
               ),
             ),
           ],
