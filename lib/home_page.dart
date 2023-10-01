@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intrusion_detection_system/login_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String text;
+  const HomePage({super.key, required this.text});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -79,11 +80,11 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 padding: const EdgeInsets.all(16.0),
-                child: const Text(
-                  '',
-                  style: TextStyle(
+                child: Text(
+                  widget.text,
+                  style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 12.0,
+                    fontSize: 16.0,
                   ),
                 ),
               ),
