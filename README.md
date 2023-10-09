@@ -38,11 +38,14 @@ flutter run
 The Flutter application should launch, allowing you to log in and monitor the system.
 
 ## Usage
-Administrator Login: Use the provided username and password (default: 'admin') to log in to the Flutter mobile application.
+**Administrator Login:** Use the provided username and password (default: 'admin') to log in to the Flutter mobile application.
+
 ![1](https://github.com/GoldenDovah/intrusion_detection_system/assets/19519174/38091c8c-1019-466d-9118-63c72a2005ef)
 
-Dashboard: The home page displays total requests, a breakdown of request types, and real-time reporting of system activity.
+**Dashboard:** The home page displays total requests, a breakdown of request types, and real-time reporting of system activity.
+
 ![2](https://github.com/GoldenDovah/intrusion_detection_system/assets/19519174/8f2b2cc8-d7a1-4e5b-9cee-88d557ca9264)
 
-Requests Page: Access the history of requests, including timestamps, to track system performance over time.
+**Requests Page:** Access the history of requests, including timestamps, to track system performance over time.
+
 ![3](https://github.com/GoldenDovah/intrusion_detection_system/assets/19519174/24d85ec5-e85d-4903-bbb7-ccb7dcc4f90b)
